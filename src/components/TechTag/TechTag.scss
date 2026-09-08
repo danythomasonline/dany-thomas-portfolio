@@ -1,0 +1,21 @@
+@use '../../styles/variables' as *;
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  border: 1px solid var(--color-content-border);
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+  color: var(--color-text);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: border-color $transition-fast, background-color $transition-fast, transform $transition-fast;
+
+  li:hover & {
+    border-color: var(--color-brand-accent);
+    background: color-mix(in srgb, var(--color-brand-accent) 10%, transparent);
+    transform: translateY(-1px);
+  }
+}

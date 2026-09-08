@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0B0E11" />
+    <meta name="author" content="Dany Thomas" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Set the real production domain here once the site is deployed (e.g. via Vercel). -->
+    <link rel="canonical" href="https://REPLACE_WITH_PRODUCTION_DOMAIN/" />
+
+    <title>Dany Thomas | Full-Stack Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of Dany Thomas, a UAE-based Full-Stack Developer building scalable enterprise applications, workflow platforms and AI-assisted digital products."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dany Thomas" />
+    <meta property="og:title" content="Dany Thomas | Full-Stack Developer" />
+    <meta
+      property="og:description"
+      content="Portfolio of Dany Thomas, a UAE-based Full-Stack Developer building scalable enterprise applications, workflow platforms and AI-assisted digital products."
+    />
+    <!-- Add an og:image (1200x630) once a hero/social preview graphic is available. -->
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Dany Thomas | Full-Stack Developer" />
+    <meta
+      name="twitter:description"
+      content="Portfolio of Dany Thomas, a UAE-based Full-Stack Developer building scalable enterprise applications, workflow platforms and AI-assisted digital products."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('dt-portfolio-theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

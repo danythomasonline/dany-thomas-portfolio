@@ -1,0 +1,86 @@
+// Theme tokens as CSS custom properties so they can be swapped at runtime via [data-theme].
+//
+// Design decision: the Hero and Footer are always rendered on the dark brand surface
+// (graphite #0B0E11 / #14181D) regardless of the light/dark toggle — this is what creates
+// the "combination of dark and light sections" premium layout called for in the brief.
+// Because that surface is never gated behind the toggle, it gets its own always-on
+// --color-brand-accent (brass) / --color-brand-accent-2 (pine) pair rather than reusing
+// the toggle-based --color-primary / --color-accent below.
+//
+// The toggle itself switches the *content* sections (About, Work, Experience, Skills,
+// Certifications, Contact) between the light and dark palettes below. Light mode keeps
+// its original blue/cyan system; dark mode uses the graphite/brass/pine system.
+
+:root {
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-accent: #22d3ee;
+  --color-focus-ring: #2563eb;
+  --color-border: rgba(148, 163, 184, 0.22);
+
+  // Brand-dark surfaces (Hero / Footer) — graphite + brass + pine, constant across both themes.
+  --color-brand-bg: #0b0e11;
+  --color-brand-bg-alt: #14181d;
+  --color-brand-text: #f2f0ea;
+  --color-brand-muted: #8b9198;
+  --color-brand-border: rgba(212, 166, 87, 0.22);
+  --color-brand-accent: #d4a657;
+  --color-brand-accent-hover: #e1b86b;
+  --color-brand-accent-soft: rgba(212, 166, 87, 0.12);
+  --color-brand-accent-2: #4c6e5d;
+  --color-brand-pine-soft: rgba(76, 110, 93, 0.16);
+
+  // Content theme — light (default, unchanged).
+  --color-bg: #f6f8fb;
+  --color-bg-alt: #ffffff;
+  --color-bg-elevated: #ffffff;
+  --color-text: #172033;
+  --color-heading: #172033;
+  --color-muted: #7c899a;
+  --color-content-border: rgba(148, 163, 184, 0.32);
+  --shadow-card: 0 8px 24px rgba(23, 32, 51, 0.08);
+
+  // Cyan reads well on dark surfaces but fails contrast on light ones —
+  // this token swaps to the primary blue in light mode so small text stays accessible.
+  --color-accent-text: var(--color-primary);
+
+  // Pointer-following card spotlight (ProjectCard, NextProject) — kept lower-opacity in
+  // light mode so the brass glow stays restrained rather than muddying the light surface.
+  --spotlight-brass: rgba(212, 166, 87, 0.07);
+  --spotlight-pine: rgba(76, 110, 93, 0.025);
+}
+
+// Content theme — dark (graphite / brass / pine). Exact tokens as specified, plus the
+// existing semantic tokens remapped onto them so every component that already consumes
+// --color-bg / --color-primary / --color-accent / etc. picks up the new palette for free.
+:root[data-theme='dark'] {
+  --bg-base: #0b0e11;
+  --bg-surface: #14181d;
+  --text-primary: #f2f0ea;
+  --text-muted: #8b9198;
+  --accent: #d4a657;
+  --accent-2: #4c6e5d;
+  --bg-elevated: #1b2026;
+  --border-color: rgba(212, 166, 87, 0.22);
+  --accent-soft: rgba(212, 166, 87, 0.12);
+  --accent-hover: #e1b86b;
+  --pine-soft: rgba(76, 110, 93, 0.16);
+
+  --color-bg: var(--bg-base);
+  --color-bg-alt: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-text: var(--text-primary);
+  --color-heading: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-content-border: var(--border-color);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --color-accent-text: var(--accent);
+
+  --color-primary: var(--accent);
+  --color-primary-hover: var(--accent-hover);
+  --color-accent: var(--accent-2);
+  --color-focus-ring: var(--accent);
+
+  --spotlight-brass: rgba(212, 166, 87, 0.1);
+  --spotlight-pine: rgba(76, 110, 93, 0.035);
+}

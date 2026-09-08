@@ -1,0 +1,353 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// Trigger button rendered in the desktop nav actions row and the mobile menu.
+// Hidden below $bp-lg, where the hamburger menu's own entry takes over instead.
+.command-palette-trigger {
+  display: none;
+  align-items: center;
+  gap: $space-2;
+  height: 40px;
+  padding-inline: $space-3;
+  border-radius: $radius-full;
+  border: 1px solid var(--color-content-border);
+  background: transparent;
+  color: var(--color-heading);
+  transition: border-color $transition-fast, background-color $transition-fast, transform $transition-fast;
+
+  @media (min-width: $bp-lg) {
+    display: flex;
+  }
+
+  &:hover {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &__kbd {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    letter-spacing: 0.02em;
+  }
+
+  &--mobile {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 44px;
+    padding: $space-3 $space-4;
+    border-radius: $radius-md;
+    font-size: 1rem;
+    color: var(--color-text);
+
+    svg {
+      flex-shrink: 0;
+      margin-right: $space-2;
+    }
+
+    // No physical Ctrl/Cmd+K shortcut on touch, so the mobile trigger shows only the label —
+    // that also sidesteps the clipping that showed up trying to fit icon + label + kbd hint
+    // in the drawer's narrower width.
+    span {
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.command-palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-5;
+  background: rgba(11, 14, 17, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  @media (max-width: $bp-md) {
+    align-items: flex-end;
+    padding: 0;
+  }
+}
+
+.command-palette {
+  width: 100%;
+  max-width: 600px;
+  max-height: min(560px, 80vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-content-border);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+
+  @media (max-width: $bp-md) {
+    max-width: none;
+    max-height: 85vh;
+    border-radius: $radius-lg $radius-lg 0 0;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-4;
+    padding: $space-5 $space-5 $space-3;
+  }
+
+  &__heading {
+    h2 {
+      font-size: 1.05rem;
+      margin: 0 0 $space-1;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+  }
+
+  &__close {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: $radius-full;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-muted);
+    transition: border-color $transition-fast, color $transition-fast;
+
+    &:hover {
+      border-color: var(--color-content-border);
+      color: var(--color-heading);
+    }
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    margin: 0 $space-5 $space-4;
+    padding: $space-3 $space-4;
+    border-radius: $radius-md;
+    border: 1px solid var(--color-content-border);
+    background: var(--color-bg);
+    color: var(--color-muted);
+    transition: border-color $transition-fast;
+
+    &:focus-within {
+      border-color: var(--color-primary);
+    }
+
+    input {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: var(--color-heading);
+      font-size: 0.95rem;
+
+      &::placeholder {
+        color: var(--color-muted);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 $space-3 $space-3;
+  }
+
+  &__empty {
+    padding: $space-6 $space-4;
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  &__group {
+    & + & {
+      margin-top: $space-3;
+    }
+  }
+
+  &__group-label {
+    display: block;
+    padding: $space-2 $space-3;
+    @include mono-label;
+    color: var(--color-muted);
+  }
+
+  &__group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    min-height: 44px;
+    padding: $space-2 $space-3;
+    border-radius: $radius-md;
+    cursor: pointer;
+    animation: command-item-reveal 220ms ease-out both;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      border-radius: $radius-full;
+      background: var(--color-primary);
+      transform: scaleY(0);
+      transition: transform $transition-fast;
+    }
+
+    &-icon {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: $radius-sm;
+      color: var(--color-muted);
+      transition: color $transition-fast, transform $transition-fast;
+    }
+
+    &-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--color-heading);
+    }
+
+    &-description {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      overflow-wrap: break-word;
+    }
+
+    &-hint {
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      color: var(--color-muted);
+      opacity: 0;
+      transform: translateX(-2px);
+      transition: opacity $transition-fast, transform $transition-fast;
+    }
+
+    &:hover,
+    &--active {
+      background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+
+      .command-palette__item-icon {
+        color: var(--color-primary);
+        transform: translateX(1px);
+      }
+
+      .command-palette__item-title {
+        color: var(--color-heading);
+      }
+
+      .command-palette__item-hint {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      &::before {
+        transform: scaleY(1);
+      }
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+
+      &:hover,
+      &--active {
+        background: transparent;
+
+        &::before {
+          transform: scaleY(0);
+        }
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    padding: $space-3 $space-5;
+    border-top: 1px solid var(--color-content-border);
+    color: var(--color-muted);
+    font-size: 0.78rem;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-1;
+    }
+
+    kbd {
+      display: inline-grid;
+      place-items: center;
+      min-width: 20px;
+      height: 20px;
+      padding-inline: 4px;
+      border-radius: $radius-sm;
+      border: 1px solid var(--color-content-border);
+      background: var(--color-bg);
+      font-family: $font-mono;
+      font-size: 0.72rem;
+      color: var(--color-heading);
+    }
+
+    @media (max-width: $bp-sm) {
+      gap: $space-3;
+    }
+  }
+}
+
+@keyframes command-item-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

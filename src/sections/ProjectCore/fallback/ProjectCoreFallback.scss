@@ -1,0 +1,59 @@
+@use '../../../styles/variables' as *;
+
+.project-core-fallback {
+  display: grid;
+  justify-items: center;
+  gap: $space-7;
+
+  &__art {
+    width: min(100%, 300px);
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-3;
+    width: 100%;
+    max-width: 560px;
+
+    @media (max-width: $bp-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-4;
+    height: 100%;
+    border-radius: $radius-md;
+    border: 1px solid var(--color-content-border);
+    background: var(--color-bg-elevated);
+    transition: border-color $transition-fast, transform $transition-fast;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--color-brand-accent);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__node {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-brand-accent);
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  &__category {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+}

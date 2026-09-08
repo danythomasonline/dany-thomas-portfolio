@@ -1,0 +1,82 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.site-footer {
+  background: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  border-top: 1px solid var(--color-brand-border);
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+    padding-block: $space-8;
+
+    @media (min-width: $bp-md) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__wordmark {
+    font-family: $font-heading;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  &__tagline {
+    margin-top: $space-2;
+    color: var(--color-brand-muted);
+    font-size: 0.9rem;
+  }
+
+  &__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-5;
+  }
+
+  &__nav a {
+    color: var(--color-brand-muted);
+    font-size: 0.92rem;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-brand-accent-2);
+    }
+  }
+
+  &__socials {
+    display: flex;
+    gap: $space-3;
+
+    a {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: $radius-full;
+      border: 1px solid var(--color-brand-border);
+      color: var(--color-brand-text);
+      transition: border-color $transition-fast, color $transition-fast;
+
+      &:hover {
+        border-color: var(--color-brand-accent-2);
+        color: var(--color-brand-accent-2);
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid var(--color-brand-border);
+
+    p {
+      @include container;
+      padding-block: $space-4;
+      color: var(--color-brand-muted);
+      font-size: 0.82rem;
+    }
+  }
+}

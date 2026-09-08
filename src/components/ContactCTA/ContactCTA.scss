@@ -1,0 +1,81 @@
+@use '../../styles/variables' as *;
+
+.contact-cta {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding: $space-7;
+  border-radius: $radius-lg;
+  border: 1px solid var(--color-content-border);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-card);
+
+  @media (min-width: $bp-md) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-5;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    min-width: 0;
+  }
+
+  // Fixed icon column + minmax(0, 1fr) text column keeps the location and email rows on
+  // identical geometry (same icon box, gap and left edge) — align-items: start (rather
+  // than center) so the icon stays pinned to the first line if the email wraps.
+  &__detail {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: start;
+    column-gap: $space-3;
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &__detail-icon {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 1.5em;
+    color: var(--color-primary);
+  }
+
+  &__email-link {
+    color: inherit;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    border-radius: 2px;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: color $transition-fast, background-size $transition-base;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-brand-accent);
+      background-size: 100% 1px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+    flex-shrink: 0;
+
+    @media (max-width: #{$bp-sm - 1px}) {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn {
+        justify-content: center;
+      }
+    }
+  }
+}

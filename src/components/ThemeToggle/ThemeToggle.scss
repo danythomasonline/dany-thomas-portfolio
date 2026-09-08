@@ -1,0 +1,59 @@
+@use '../../styles/variables' as *;
+
+.theme-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-full;
+  border: 1px solid var(--color-content-border);
+  background: transparent;
+  color: var(--color-heading);
+  transition: border-color $transition-fast, background-color $transition-fast, transform $transition-fast;
+
+  // Invisible hit-area extending the ~40px visible circle to the ~44px accessible
+  // touch-target minimum, without changing the button's rendered size.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+  }
+
+  &:hover {
+    border-color: var(--color-brand-accent);
+    background: color-mix(in srgb, var(--color-brand-accent) 10%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.9);
+    border-color: var(--color-brand-accent);
+  }
+
+  &__icon {
+    grid-area: 1 / 1;
+    transition: opacity $transition-base, transform $transition-base;
+
+    &--sun {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+
+    &--moon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.6);
+    }
+  }
+}
+
+:root[data-theme='dark'] .theme-toggle {
+  .theme-toggle__icon--sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  .theme-toggle__icon--moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}

@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $space-5;
+
+  @media (min-width: $bp-lg) {
+    padding-inline: $space-7;
+  }
+}
+
+@mixin reduce-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+@mixin section-space {
+  padding-block: $space-9;
+
+  @media (max-width: $bp-md) {
+    padding-block: $space-7;
+  }
+}
+
+@mixin mono-label {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

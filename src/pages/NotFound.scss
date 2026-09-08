@@ -1,0 +1,38 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.not-found {
+  min-height: calc(100vh - 76px);
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  text-align: center;
+
+  &__inner {
+    @include container;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__code {
+    font-size: 3.5rem;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  p {
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .btn {
+    margin-top: $space-3;
+  }
+}

@@ -1,0 +1,31 @@
+@use '../../styles/variables' as *;
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  max-width: 640px;
+  margin-bottom: $space-7;
+
+  &--center {
+    margin-inline: auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  &__eyebrow {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  &__title {
+    font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+    letter-spacing: -0.01em;
+  }
+
+  &__description {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+}

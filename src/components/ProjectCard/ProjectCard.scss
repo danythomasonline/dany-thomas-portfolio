@@ -1,0 +1,190 @@
+@use '../../styles/variables' as *;
+
+.project-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --spotlight-opacity: 0;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-content-border);
+  box-shadow: var(--shadow-card);
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+  height: 100%;
+
+  &:hover,
+  &:focus-within {
+    --spotlight-opacity: 1;
+    transform: perspective(700px) translateY(-5px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    box-shadow: $shadow-lg;
+    border-color: var(--color-brand-accent);
+  }
+
+  &__spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--spotlight-opacity, 0);
+    transition: opacity $transition-base;
+    background: radial-gradient(
+      circle 280px at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+      var(--spotlight-brass),
+      var(--spotlight-pine) 42%,
+      transparent 72%
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover,
+    &:focus-within {
+      transform: none;
+    }
+  }
+
+  &__visual {
+    aspect-ratio: 400 / 220;
+    background: var(--color-brand-bg);
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    padding: $space-6;
+  }
+
+  &__category {
+    color: var(--color-primary);
+  }
+
+  &__name {
+    font-size: 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: $space-2;
+  }
+
+  &__fullname {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  &__description {
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    margin: $space-1 0;
+  }
+
+  &__contribution {
+    font-size: 0.92rem;
+    color: var(--color-text);
+    line-height: 1.6;
+
+    strong {
+      color: var(--color-heading);
+    }
+  }
+
+  &__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    padding-top: $space-3;
+    font-weight: 600;
+    color: var(--color-primary);
+    width: fit-content;
+    border-bottom: 1px solid transparent;
+    transition: border-color $transition-fast;
+
+    &:hover {
+      border-color: currentColor;
+    }
+  }
+
+  &__link-icon {
+    transition: transform $transition-fast;
+  }
+
+  // Combines the existing "nudge forward on hover" with the icon's own magnetic drift
+  // (see MagneticButton.scss) into one transform — keyboard focus keeps the plain nudge
+  // only, so magnetic movement never shows for :focus-visible.
+  &__link:hover &__link-icon {
+    transform: translate(calc(3px + var(--magnetic-x, 0px) * 0.6), calc(-3px + var(--magnetic-y, 0px) * 0.6));
+  }
+
+  &__link:focus-visible &__link-icon {
+    transform: translate(3px, -3px);
+  }
+}
+
+// Pointer response for the embedded project artwork (SedresVisual, SgivsVisual,
+// ProposalVisual, BalanceVisual — see their pv-hover-fx-* classNames). Scoped to
+// :hover/:focus-within on the card itself so the same SVGs stay static wherever else
+// they're reused (e.g. CaseStudyHero's banner, which isn't a hover target).
+@media (prefers-reduced-motion: no-preference) {
+  .pv-hover-fx {
+    transition: transform $transition-base, stroke-opacity $transition-base, filter $transition-base;
+    transform-origin: center;
+  }
+
+  .project-card:hover,
+  .project-card:focus-within {
+    .pv-hover-fx--shift-sm {
+      transform: translate(3px, -2px);
+    }
+
+    .pv-hover-fx--bright {
+      stroke-opacity: 0.85;
+    }
+
+    .pv-hover-fx--glow {
+      filter: drop-shadow(0 0 4px rgba(212, 166, 87, 0.55));
+    }
+
+    .pv-hover-fx--separate-back {
+      transform: translate(-2px, 2px);
+    }
+
+    .pv-hover-fx--separate-mid {
+      transform: translate(0, 1px);
+    }
+
+    .pv-hover-fx--separate-front {
+      transform: translate(2px, -2px);
+    }
+
+    .pv-hover-fx--seq-1 {
+      transition-delay: 0ms;
+    }
+
+    .pv-hover-fx--seq-2 {
+      transition-delay: 70ms;
+    }
+
+    .pv-hover-fx--seq-3 {
+      transition-delay: 140ms;
+    }
+  }
+}

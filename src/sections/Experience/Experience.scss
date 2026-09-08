@@ -1,0 +1,12 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.experience {
+  @include section-space;
+  background: var(--color-bg);
+
+  &__inner {
+    @include container;
+    max-width: 880px;
+  }
+}

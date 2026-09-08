@@ -1,0 +1,56 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.about {
+  @include section-space;
+  background: var(--color-bg);
+
+  &__inner {
+    @include container;
+  }
+
+  &__grid {
+    display: grid;
+    gap: $space-7;
+
+    @media (min-width: $bp-lg) {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: start;
+    }
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+
+    p {
+      color: var(--color-text);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+  }
+
+  &__keywords {
+    padding: $space-6;
+    border-radius: $radius-lg;
+    border: 1px solid var(--color-content-border);
+    background: var(--color-bg-elevated);
+    box-shadow: var(--shadow-card);
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-3;
+    }
+
+    li {
+      padding: $space-2 $space-4;
+      border-radius: $radius-full;
+      background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+      color: var(--color-heading);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+  }
+}

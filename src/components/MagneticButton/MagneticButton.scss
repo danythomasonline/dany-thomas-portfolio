@@ -1,0 +1,37 @@
+@use '../../styles/variables' as *;
+
+.magnetic-btn {
+  --magnetic-x: 0px;
+  --magnetic-y: 0px;
+  --magnetic-scale: 1;
+
+  &__inner {
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    gap: inherit;
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) scale(var(--magnetic-scale));
+    transition: transform $transition-base;
+    will-change: transform;
+  }
+
+  &__icon {
+    display: inline-flex;
+    transform: translate3d(calc(var(--magnetic-x) * 0.6), calc(var(--magnetic-y) * 0.6), 0);
+    transition: transform $transition-base;
+  }
+
+  // Magnetic drift is pointer-only — a keyboard-focused button must land exactly where
+  // it's laid out, with nothing but the standard focus ring to show it's active.
+  &:focus-visible &__inner,
+  &:focus-visible &__icon {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-btn__inner,
+  .magnetic-btn__icon {
+    transition: none;
+  }
+}

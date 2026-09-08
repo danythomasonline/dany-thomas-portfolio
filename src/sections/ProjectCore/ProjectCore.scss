@@ -1,0 +1,156 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.project-core {
+  position: relative;
+  overflow: hidden;
+  @include section-space;
+  background: var(--color-bg);
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+  }
+
+  &__copy {
+    max-width: 640px;
+  }
+
+  &__instruction {
+    margin-top: $space-4;
+    color: var(--color-muted);
+  }
+
+  &__stage {
+    position: relative;
+    width: 100%;
+  }
+
+  // Desktop 'full' — pinned canvas fills a generous, viewport-relative stage; the DOM
+  // links overlay it directly in four fixed quadrants matching the fragments' resting
+  // positions in scene/fragmentLayout.ts.
+  &--full &__stage {
+    height: clamp(440px, 72vh, 680px);
+  }
+
+  &--full &__scene {
+    position: absolute;
+    inset: 0;
+  }
+
+  &--full &__canvas {
+    position: absolute;
+    inset: 0;
+  }
+
+  &--full &__links {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &--full &__link {
+    position: absolute;
+
+    &--top-left {
+      top: 6%;
+      left: 0;
+      --reveal-delay: 0ms;
+    }
+
+    &--top-right {
+      top: 6%;
+      right: 0;
+      --reveal-delay: 80ms;
+    }
+
+    &--bottom-left {
+      bottom: 8%;
+      left: 0;
+      --reveal-delay: 160ms;
+    }
+
+    &--bottom-right {
+      bottom: 8%;
+      right: 0;
+      --reveal-delay: 240ms;
+    }
+  }
+
+  // Mobile/tablet 'lite' — no pin, shorter canvas block, links become a plain stacked
+  // list beside/below it rather than an absolute overlay (keeps hit-targets generous
+  // and avoids any risk of overlap at narrow widths).
+  &--lite &__scene {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &--lite &__canvas {
+    position: relative;
+    height: clamp(300px, 48vh, 380px);
+    border-radius: $radius-lg;
+    overflow: hidden;
+  }
+
+  &--lite &__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-2;
+
+    @media (max-width: $bp-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--lite &__link {
+    position: static;
+    width: 100%;
+    justify-content: center;
+  }
+
+  &--static &__stage {
+    padding-block: $space-4;
+  }
+}
+
+.project-core__link {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  border: 1px solid var(--color-content-border);
+  background: color-mix(in srgb, var(--color-bg-elevated) 85%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--color-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.5;
+  pointer-events: auto;
+  // --reveal-delay is set per quadrant (only staggers the reveal fade-in, not hover feedback).
+  transition: opacity $transition-base var(--reveal-delay, 0ms), border-color $transition-fast, color $transition-fast,
+    transform $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-brand-accent);
+    color: var(--color-brand-accent);
+    transform: translateY(-2px);
+  }
+}
+
+.project-core__links.is-revealed .project-core__link {
+  opacity: 1;
+}
+
+.project-core__link-node {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-brand-accent);
+}

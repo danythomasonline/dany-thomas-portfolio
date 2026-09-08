@@ -1,0 +1,28 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  @include section-space;
+  background: var(--color-bg-alt);
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 15%, var(--color-brand-accent-soft), transparent 55%),
+      radial-gradient(circle at 82% 85%, var(--color-brand-pine-soft), transparent 50%);
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    @include container;
+    max-width: 880px;
+  }
+
+  &__cta-wrap {
+    margin-top: $space-4;
+  }
+}
