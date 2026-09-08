@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { siteMeta } from '../data/portfolioData';
+import { resumeUrl } from '../data/portfolioData';
 
 /**
  * Guards against linking to a 404: both the Vite dev server and Vercel's SPA rewrite
@@ -12,7 +12,7 @@ export function useResumeAvailability(): boolean {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(siteMeta.resumePath, { method: 'HEAD' })
+    fetch(resumeUrl, { method: 'HEAD' })
       .then((res) => {
         const isPdf = (res.headers.get('content-type') ?? '').includes('pdf');
         if (!cancelled) setAvailable(res.ok && isPdf);

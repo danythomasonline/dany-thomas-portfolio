@@ -16,11 +16,10 @@ export const siteMeta = {
   title: 'Dany Thomas | Full-Stack Developer',
   description:
     'Portfolio of Dany Thomas, a UAE-based Full-Stack Developer building scalable enterprise applications, workflow platforms and AI-assisted digital products.',
-  // Exact on-disk filename in `public/` (double `.pdf` extension and all) — the `download`
-  // attribute below controls what the browser names the saved file, independent of this.
-  resumePath: `${import.meta.env.BASE_URL}Dany-Thomas-Resume.pdf.pdf`,
-  resumeFileName: 'Dany-Thomas-Resume.pdf',
 };
+
+export const resumeFileName = 'Dany-Thomas-Resume.pdf';
+export const resumeUrl = `${import.meta.env.BASE_URL}${resumeFileName}`;
 
 export const navLinks: NavLink[] = [
   { label: 'Home', href: '#home' },

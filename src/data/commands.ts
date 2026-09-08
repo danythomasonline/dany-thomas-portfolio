@@ -1,6 +1,6 @@
 import { Briefcase, Code, Download, Mail, MessageCircle, Milestone, Sun } from 'lucide-react';
 import { LinkedInIcon } from '../components/icons/LinkedInIcon';
-import { contact, siteMeta } from './portfolioData';
+import { contact, resumeFileName, resumeUrl } from './portfolioData';
 import type { CommandDefinition } from '../types/commandPalette';
 
 /**
@@ -53,7 +53,7 @@ export const commandDefinitions: CommandDefinition[] = [
     group: 'actions',
     keywords: ['cv', 'resume', 'pdf'],
     icon: Download,
-    action: { type: 'download', href: siteMeta.resumePath, fileName: siteMeta.resumeFileName },
+    action: { type: 'download', href: resumeUrl, fileName: resumeFileName },
   },
   {
     id: 'connect-linkedin',

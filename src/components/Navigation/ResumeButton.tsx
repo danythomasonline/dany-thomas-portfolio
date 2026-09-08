@@ -1,5 +1,5 @@
 import { Download } from 'lucide-react';
-import { siteMeta } from '../../data/portfolioData';
+import { resumeFileName, resumeUrl } from '../../data/portfolioData';
 import { useResumeAvailability } from '../../hooks/useResumeAvailability';
 import { MagneticButton } from '../MagneticButton/MagneticButton';
 
@@ -24,8 +24,8 @@ export function ResumeButton({ className = '' }: { className?: string }) {
     <MagneticButton
       as="a"
       className={`btn btn--secondary ${className}`}
-      href={siteMeta.resumePath}
-      download={siteMeta.resumeFileName}
+      href={resumeUrl}
+      download={resumeFileName}
     >
       <Download size={16} aria-hidden="true" className="magnetic-btn__icon" />
       Download Résumé
